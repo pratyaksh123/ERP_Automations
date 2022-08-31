@@ -1,0 +1,23 @@
+service: selenium-layer
+
+# The `provider` block defines where your service will be deployed
+provider:
+  name: aws
+  runtime: python3.6
+  region: us-east-1
+  timeout: 900
+
+# The `functions` block defines what code to deploy
+layers:
+  selenium:
+    path: selenium
+    description: selenium layer
+    compatibleRuntimes: [
+      "python3.6"
+    ]
+  chromedriver:
+    path: chromedriver
+    description: chrome driver layer
+    compatibleRuntimes: [
+      "python3.6"
+    ]
