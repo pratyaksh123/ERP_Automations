@@ -1,9 +1,9 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from tempfile import mkdtemp
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import json
 import boto3
-from datetime import datetime
 
 
 def ulify(elements):
@@ -50,21 +50,31 @@ def email_handler(update):
     print(f"ses response id received: {ses_response['MessageId']}.")
 
 
-def main(event, context):
-    options = Options()
-    options.binary_location = '/opt/headless-chromium'
+def handler(event=None, context=None):
+    options = webdriver.ChromeOptions()
+    options.binary_location = '/opt/chrome/chrome'
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
-    options.add_argument('--single-process')
-    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1280x1696")
+    options.add_argument("--single-process")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-dev-tools")
+    options.add_argument("--no-zygote")
+    options.add_argument(f"--user-data-dir={mkdtemp()}")
+    options.add_argument(f"--data-path={mkdtemp()}")
+    options.add_argument(f"--disk-cache-dir={mkdtemp()}")
+    options.add_argument("--remote-debugging-port=9222")
+    driver = webdriver.Chrome("/opt/chromedriver",
+                              options=options)
 
-    driver = webdriver.Chrome('/opt/chromedriver', chrome_options=options)
     driver.get('https://www.delhivery.com/track/package/2827715726000')
     html = driver.page_source
 
     soup = BeautifulSoup(html)
     updates = []
-    table = soup.find_all('tbody')[1]
+    table = soup.find_all('tbody')
+    print(table)
     for tag in table:
         if (tag.text != ""):
             updates.append(tag.text)
