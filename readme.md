@@ -15,3 +15,4 @@ set username and password env var in .env
 So it looks like this : 
 
 EC2 instance -> API Gateway -> Lambda -> SES
+![aws drawio](https://user-images.githubusercontent.com/55044774/212293384-5d96bc30-5545-49eb-9b2f-6d313833c583.png)
