@@ -16,3 +16,9 @@ So it looks like this :
 
 EC2 instance -> API Gateway -> Lambda -> SES
 ![aws drawio](https://user-images.githubusercontent.com/55044774/212293384-5d96bc30-5545-49eb-9b2f-6d313833c583.png)
+
+
+## Steps to run 
+1. Activate venv : `source my-env/bin/activate`
+2. Create `.env` with username and password
+3. `python3 login.py`
