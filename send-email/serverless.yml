@@ -1,0 +1,13 @@
+org: pratyaksh5676
+app: course-tracker
+service: send-email
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+
+functions:
+  hello:
+    handler: handler.hello
